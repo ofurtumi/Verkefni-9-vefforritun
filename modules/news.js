@@ -17,21 +17,24 @@ const cache = {};
  *           Skilar `null` ef villa kom upp við að sækja gögn.
  */
 export async function fetchNews(id = '') {
-    const cacheKey = id || 'index';
+  // console.log(cache)
+  const cacheKey = id || 'index';
 
-    if (cacheKey in cache) {
-        return cache[cacheKey]
-    }
+  if (cacheKey in cache) {
+    return cache[cacheKey];
+  }
 
+  try {
     const url = new URL(id, NEWS_API);
-
-    try { 
-        const result = await fetch(url);
-        return await result.json();
-    }
-
-    catch (e) {
-        console.warn('unable to fetch', e);
-        return null;
-    }
+    let result = await fetch(url);
+    if (result.status >= 400) return null;
+    // await result.json();
+    // await cache.push(result.json())
+    result = result.json();
+    cache[cacheKey] = result;
+    return result;
+  } catch (e) {
+    console.warn('unable to fetch', e);
+    return null;
+  }
 }

@@ -1,4 +1,101 @@
+body,
+html {
+  font-size: 16px;
+  font-family: monospace;
+  padding: none;
+  margin: none;
+}
+
+header h1 {
+  text-align: center;
+  margin: 0.25em;
+}
+
 main {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
+  padding: 0 2em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
+}
+
+a {
+  border-radius: 10px 5px;
+  padding: 0.25em;
+  display: inline-block;
+  transition: 0.2s;
+}
+
+section {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: flex-end; */
+  font-size: 0.9em;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  padding: 0.5em;
+  /* padding-bottom: 3em; */
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+section h1 {
+  margin: 0;
+}
+
+section a {
+  color: black;
+  margin: 0.1em 0;
+  display: block;
+  text-decoration: none;
+}
+
+footer {
+  position: fixed;
+  bottom: 0.5em;
+  right: 2em;
+}
+
+footer p {
+  margin: 0;
+}
+
+.takki {
+  border-top: 2px solid black;
+  /* flex-grow: 1; */
+  justify-self: center;
+  /* grid-column: span 3; */
+  /* align-self: last-baseline; */
+  margin-top: 2em;
+  border-radius: 0;
+}
+
+#loadAllt {
+  grid-column: span 1/3;
+  text-align: center;
+  font-size: 5em;
+}
+
+a:hover,
+a:focus-visible {
+  color: white;
+  background-color: black;
+  border-radius: 5px 10px;
+}
+
+.stor {
+  grid-column: span 3;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  column-gap: 2em;
+}
+
+.stor h1 {
+    grid-column: span 3;
+    justify-self: center;
+    margin-bottom: 1em;
+}
+
+.stor .takki {
+    grid-column: span 3;
 }
