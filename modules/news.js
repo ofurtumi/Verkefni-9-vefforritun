@@ -8,7 +8,7 @@ const NEWS_API = 'https://vef2-2021-ruv-rss-json-proxy.herokuapp.com/';
  * vel þekktum „lykli“ (cache key), við næstu köll getum við athugað hvort hlutur innihaldi þennan
  * lykil og skilað þá þeirri niðurstöðu í stað þess að gera sama kall aftur.
  */
-export const cache = {};
+const cache = {};
 
 /**
  * Sækir fréttir frá vefþjónustu. Geymir í in-memory cache gögn eftir `id`.

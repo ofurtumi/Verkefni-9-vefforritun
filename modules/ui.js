@@ -1,6 +1,3 @@
-import { el } from "./helpers";
-import { fetchNews } from "./news";
-
 /**
  * Föll sem sjá um að kalla í `fetchNews` og birta viðmót:
  * - Loading state meðan gögn eru sótt
@@ -10,6 +7,10 @@ import { fetchNews } from "./news";
  * flokks *án þess* að nota sjálfgefna <a href> virkni—við tökum yfir og sjáum
  * um sjálf með History API.
  */
+
+import { el, empty } from "./helpers.js";
+import { fetchNews } from "./news.js";
+
 
 /**
  * Sér um smell á flokk og birtir flokkinn *á sömu síðu* og við erum á.
@@ -35,6 +36,8 @@ import { fetchNews } from "./news";
       e.preventDefault();
   
       // TODO útfæra
+      empty('main')
+      fetchAndRenderCategory(id,'main','""',20)
     };
   }
   
@@ -48,8 +51,8 @@ import { fetchNews } from "./news";
   function handleBackClick(container, newsItemLimit) {
     return (e) => {
       e.preventDefault();
-  
-      // TODO útfæra
+      empty(container)
+      fetchAndRenderLists(container,newsItemLimit)
     };
   }
   
@@ -60,7 +63,8 @@ import { fetchNews } from "./news";
    * @returns {HTMLElement} Element með takka sem fer á forsíðu
    */
   export function createCategoryBackLink(container, newsItemLimit) {
-    // TODO útfæra
+    let takki = el('a')
+    takki.addEventListener("click", handleBackClick(container,newsItemLimit))
   }
   
   /**
@@ -71,23 +75,21 @@ import { fetchNews } from "./news";
    */
   export async function fetchAndRenderLists(container, newsItemLimit) {
     // Byrjum á að birta loading skilaboð
+    container.appendChild(el("p","sæki fréttir..."))
+
+    fetchNews()
+      .then(data => {
+        empty(container)
+        for (const item of data) {
+          const link = el('a','allar fréttir')
+          link.setAttribute("href","/?category="+item.id)
+          link.addEventListener("click",handleCategoryClick(item.id,container,newsItemLimit))
+          fetchAndRenderCategory(item.id,container,link,newsItemLimit)
+        }
+      }
+    )
+      .catch(error => console.error(error))
   
-    // Birtum þau beint á container
-  
-    // Sækjum yfirlit með öllum flokkum, hér þarf að hugsa um Promises!
-  
-    // Fjarlægjum loading skilaboð
-  
-    // Athugum hvort villa hafi komið upp => fetchNews skilaði null
-  
-    // Athugum hvort engir fréttaflokkar => fetchNews skilaði tómu fylki
-  
-    // Búum til <section> sem heldur utan um allt
-  
-    // Höfum ekki-tómt fylki af fréttaflokkum! Ítrum í gegn og birtum
-  
-  
-    // Þegar það er smellt á flokka link, þá sjáum við um að birta fréttirnar, ekki default virknin
   }
   
   /**
@@ -103,7 +105,28 @@ import { fetchNews } from "./news";
     link = null,
     limit = Infinity
   ) {
-    el(id)
+    let section = el('section', el("p","Sæki gögn..."))
+    parent.appendChild(section)
+    fetchNews(id)
+      .then(data => {
+        empty(section)
+        if(data === null) {
+          section.appendChild(el("p", "Villa kom upp!"))
+          return
+        }
+
+        for (let i = 0; i < limit; i++) {
+          // console.log(data.items[i].title)
+          section.appendChild(el('p',data.items[i].title))
+        }
+        section.appendChild(link)
+      }
+    )
+      .catch(error => {
+        empty(parent)
+        console.error(error)
+      })
+    }
     // Búum til <section> sem heldur utan um flokkinn
   
     // Bætum við parent og þannig DOM, allar breytingar héðan í frá fara gegnum
@@ -124,4 +147,3 @@ import { fetchNews } from "./news";
     // Bætum við titli
   
     // Höfum fréttir! Ítrum og bætum við <ul>
-  }

@@ -1,9 +1,4 @@
-body {
-    font-size: 16px;
-}
-
 main {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2em;
+    grid-template-columns: repeat(3,1fr);
 }
