@@ -117,6 +117,7 @@ export async function fetchAndRenderCategory(
       for (let i = 0; i < limit; i++) {
         const frettLinkur = el('a', data.items[i].title);
         frettLinkur.setAttribute('href', data.items[i].link);
+        frettLinkur.setAttribute('target', "empty");
         section.appendChild(frettLinkur);
       }
       section.appendChild(link);
