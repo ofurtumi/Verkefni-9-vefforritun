@@ -1,4 +1,5 @@
 // imports
+import { empty } from './modules/helpers.js';
 import {
   createCategoryBackLink,
   fetchAndRenderCategory,
@@ -25,6 +26,7 @@ function route() {
 }
 
 window.onpopstate = () => {
+  empty(main);
   route();
 };
 
