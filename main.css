@@ -4,7 +4,15 @@ html {
   font-family: monospace;
   padding: none;
   margin: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+
 
 header h1 {
   text-align: center;
@@ -61,12 +69,13 @@ footer p {
 }
 
 .takki {
-  border-top: 2px solid black;
-  /* flex-grow: 1; */
+  width: 100%;
+  padding-top: 0.5em;
+  text-align: center;
+  border-top: 1px solid gray;
   justify-self: center;
-  /* grid-column: span 3; */
-  /* align-self: last-baseline; */
-  margin-top: 2em;
+  align-self: center;
+  margin-top: 0.5em;
   border-radius: 0;
 }
 
@@ -78,10 +87,9 @@ footer p {
 
 a:hover,
 a:focus-visible {
-  color: white;
-  background-color: black;
-  border-radius: 5px 10px;
-  font-weight: bold;
+  text-decoration: underline;
+  /* font-weight: bold; */
+  /* border-color: white; */
 }
 
 .stor {
